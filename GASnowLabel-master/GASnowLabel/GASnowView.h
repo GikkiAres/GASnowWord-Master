@@ -18,5 +18,11 @@
 
 @interface GASnowView : UIView
 @property (nonatomic, strong) id<GASnowViewDelegate> delegate;
+@property (nonatomic,assign) CGFloat  yDropDestination;
+//为什么有的属性不会自动合成?
+@property (nonatomic,assign) CGVector speed;
 
+@property (nonatomic,assign) CGPoint centerEnd;
+
+- (void)drop;
 @end

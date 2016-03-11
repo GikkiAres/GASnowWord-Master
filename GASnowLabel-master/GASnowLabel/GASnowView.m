@@ -14,8 +14,6 @@
 @property (nonatomic,strong) NSTimer *timer;
 @property (nonatomic,strong) CADisplayLink *link;
 //为什么有的属性不会自动合成?
-@property (nonatomic,assign) CGVector speed;
-@property (nonatomic,assign) CGFloat  yDropDestination;
 
 
 @end
@@ -47,38 +45,35 @@
   NSTimeInterval time = arc4random()%(3+1)-6+kDURATION;
   CGFloat dy = newSuperview.frame.size.height/time/FPS;
   CGFloat dx = (arc4random()%100-50)/time/FPS;
+  _centerEnd = CGPointMake(arc4random()%101/100.0*newSuperview.frame.size.width, newSuperview.frame.size.height);
   _speed = CGVectorMake(dx, dy);
   
 //    _timer = [NSTimer scheduledTimerWithTimeInterval:1/FPS target:self selector:@selector(drop) userInfo:nil repeats:YES];
-  _link = [CADisplayLink displayLinkWithTarget:self selector:@selector(drop)];
-  [_link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-  [self drop];
+//  _link = [CADisplayLink displayLinkWithTarget:self selector:@selector(drop)];
+//  [_link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//  [self drop];
 }
 
 - (void)drop {
   CGPoint center = self.center;
-  if (center.y>=_yDropDestination) {
-    if (_timer) {
-      [_timer invalidate];
-      _timer = nil;
-    }
-    if (_link) {
-      [_link invalidate];
-      _link = nil;
-    }
-    [UIView animateWithDuration:arc4random()%10 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-      self.alpha=0;
-    } completion:^(BOOL finished) {
-      [self removeFromSuperview];
-    }];
+//  if (center.y>=_yDropDestination) {
+//    if (_timer) {
+//      [_timer invalidate];
+//      _timer = nil;
+//    }
+//    if (_link) {
+//      [_link invalidate];
+//      _link = nil;
+//    }
+
     
-  }
-  else {
+//  }
+//  else {
 //    CGPoint pt = [ convertPoint:snow.center fromLayer:self.view.layer];
     if (_delegate) {
       if ([_delegate isInSlowArea:self]) {
-        center.x += _speed.dx/20;
-        center.y += _speed.dy/20;
+        center.x += _speed.dx/10;
+        center.y += _speed.dy/10;
         self.center = center;
       }
       else {
@@ -93,7 +88,7 @@
     self.center = center;
 //    NSLog(@"OUT");
     }
-  }
+//  }
 }
 
 @end
